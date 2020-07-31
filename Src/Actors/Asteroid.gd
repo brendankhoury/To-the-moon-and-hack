@@ -10,10 +10,11 @@ var vector := Vector2.DOWN
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	angle += rand_range(-max_angle, max_angle)
-	vector = Vector2(cos(angle), sin(angle))
+	vector = move_speed*Vector2(cos(angle), sin(angle))
 
 func _physics_process(delta: float) -> void:
-	
 	move_and_collide(vector)
 	rotate(rotation_speed)
 
+func _on_VisibilityNotifier2D_screen_exited():
+	queue_free()

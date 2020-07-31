@@ -21,19 +21,6 @@ func grapple(length: float, angle: float):
 	if grapple_collided:
 		collision_point = raycast.get_collision_point()	
 	
-func move_to_grapple():
-	print("Move to grapple")
-	var raycast = get_node("GrappleDetection")
-	var currentpos = raycast.global_position
-
-	grapple_length = currentpos.distance_to(collision_point)
-	grapple_dir = currentpos.direction_to(collision_point)
-	print(grapple_dir)
-	print(collision_point)
-	#move below:
-	velocity.x += grapple_dir.x
-	velocity.y += grapple_dir.y
-	velocity = move_and_slide(velocity)
 func _draw() -> void:
 	draw_line(
 		Vector2(0, 0), 
@@ -66,7 +53,15 @@ func _physics_process(delta: float) -> void:
 			#consider dissabling the raycast for performance purposes
 			is_grappling = false
 	elif grapple_collided:
-		move_to_grapple()
+		var raycast = get_node("GrappleDetection")
+		var currentpos = raycast.global_position
+	
+		grapple_length = currentpos.distance_to(collision_point)
+		grapple_dir = currentpos.direction_to(collision_point)
+		
+		position += grapple_speed * grapple_dir * delta
+		grapple_length -= grapple_speed * delta
+		
 	elif grapple_length > 0.0:
 		grapple_length -= grapple_speed * delta
 		if grapple_length < 0:
@@ -75,5 +70,6 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_asteroid_entered(body: Node) -> void:
+	grapple_collided = false
 	print ("Asteroid collission detected. ")
 	pass # Replace with function body.

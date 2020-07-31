@@ -22,7 +22,6 @@ scale = Vector2( 0.456065, 0.456065 )
 shape = SubResource( 1 )
 
 [node name="GrappleDetection" type="RayCast2D" parent="."]
-position = Vector2( 0, 21 )
 enabled = true
 collision_mask = 2
 collide_with_areas = true

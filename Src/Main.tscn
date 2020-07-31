@@ -29,5 +29,6 @@ position = Vector2( -161.635, -419.801 )
 rotation = -7.75955e-06
 
 [node name="AsteroidSpawnTimer" type="Timer" parent="."]
+wait_time = 3.134
 autostart = true
 [connection signal="timeout" from="AsteroidSpawnTimer" to="." method="_on_AsteroidSpawnTimer_timeout"]

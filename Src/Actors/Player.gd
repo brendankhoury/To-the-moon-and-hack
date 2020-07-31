@@ -19,7 +19,12 @@ func grapple(length: float, angle: float):
 	raycast.set_cast_to(Vector2(0, length))
 	grapple_collided = raycast.is_colliding()
 	if grapple_collided:
-		collision_point = raycast.get_collision_point()	
+		if abs(global_position.distance_to(raycast.get_collision_point())) < 50:
+			collision_point = raycast.get_collision_point()	
+		else: 
+			grapple_length = 30
+			grapple_collided = false
+			is_grappling = false
 	
 func _draw() -> void:
 	draw_line(

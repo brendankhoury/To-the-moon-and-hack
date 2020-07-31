@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Src/Actors/Asteroid.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Src/Actors/Player.tscn" type="PackedScene" id=2]
+
+[node name="Test" type="Node2D"]
+
+[node name="Asteroid" parent="." instance=ExtResource( 1 )]
+position = Vector2( 186.887, 200.101 )
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+position = Vector2( 264.778, 367.458 )
+rotation = 2.79253
+rotation_speed = 0.0

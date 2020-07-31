@@ -16,7 +16,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Space Themed Game"
-run/main_scene="res://Src/Main scene.tscn"
+run/main_scene="res://Src/Main.tscn"
 config/icon="res://icon.png"
 
 [rendering]

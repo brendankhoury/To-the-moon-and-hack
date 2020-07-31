@@ -13,4 +13,5 @@ move_speed = 0
 position = Vector2( 327.537, 403.58 )
 rotation = 1.63886
 rotation_speed = 0.1
+grapple_speed = 900.0
 max_grapple = 800

@@ -7,16 +7,21 @@ export var max_angle := deg2rad(30)
 var angle := deg2rad(90)
 var vector := Vector2.DOWN
 
+var rotation_coef: float
+var movement_coef: float
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	angle += rand_range(-max_angle, max_angle)
 	vector = move_speed*Vector2(cos(angle), sin(angle))
+	movement_coef = rand_range(0.7,1.3)
+	rotation_coef = (rand_range(-1.5,1.5))
 	
 
 func _physics_process(delta: float) -> void:
 	if delta < 100:
-		apply_central_impulse(vector)
-		apply_torque_impulse(rotation_speed)
+		apply_central_impulse(movement_coef*vector)
+		apply_torque_impulse(rotation_coef*rotation_speed)
 	else:
 		apply_central_impulse(Vector2(0,0))
 		apply_torque_impulse(0)

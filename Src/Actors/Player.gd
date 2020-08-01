@@ -61,6 +61,12 @@ func _process(_delta: float) -> void:
 func _ready() -> void:
 	PLAYER_WIDTH = get_node("player").texture.get_size().x/4.0
 func _physics_process(delta: float) -> void:
+	if !get_parent().get_parent().get_node("Node2D/StartButton").started:
+		get_parent().get_parent().get_node("Node2D/StartButton").started = true
+		return
+	if get_parent().get_parent().get_node("Node2D/PauseButton").paused:
+		get_parent().get_parent().get_node("Node2D/PauseButton").paused = false
+		return
 	var raycast = get_node("GrappleDetection")	
 	
 	if !grapple_collided and (Input.is_action_pressed("tap") or is_grappling or grapple_length != MIN_GRAPPLE_LENGTH):
@@ -128,7 +134,6 @@ func reparent(node, previous_global_position):
 var score : int = 0
 func _on_Timer_timeout():
 	score = score + 1
-	print(score)
 	get_parent().get_parent().get_node("Node2D").get_node("Label").text = "Score: " + str(score)
 
 func _on_VisibilityNotifier2D_screen_exited():

@@ -96,6 +96,8 @@ func _physics_process(delta: float) -> void:
 			#consider dissabling the raycast for performance purposes
 			is_grappling = false
 	elif grapple_collided:
+		var scoretimer = get_parent().get_parent().get_node("Timer")
+		scoretimer.start()
 		global_collision_point = asteroid.to_global(collision_point)
 
 		grapple_length = raycast.global_position.distance_to(global_collision_point)
@@ -122,3 +124,13 @@ func reparent(node, previous_global_position):
 	node.get_parent().remove_child(node) # error here  
 	asteroid.add_child(node) 
 	set_global_position(previous_global_position)
+	
+var score : int = 0
+func _on_Timer_timeout():
+	score = score + 1
+	print(score)
+	get_parent().get_parent().get_node("Node2D").get_node("Label").text = "Score: " + str(score)
+
+func _on_VisibilityNotifier2D_screen_exited():
+	queue_free()
+	

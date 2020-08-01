@@ -80,6 +80,7 @@ rotation = -7.75955e-06
 
 [node name="AsteroidSpawnTimer" type="Timer" parent="."]
 wait_time = 3.134
+autostart = true
 
 [node name="TextureButton" type="TextureButton" parent="."]
 pause_mode = 2

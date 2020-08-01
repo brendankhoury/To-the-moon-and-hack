@@ -4,9 +4,9 @@
 [ext_resource path="res://Src/Actors/Asteroid.gd" type="Script" id=2]
 
 [sub_resource type="NavigationPolygon" id=1]
-vertices = PoolVector2Array( 9.46348, 30.335, -21.2957, 42.0023, -51.5245, 10.3593, -33.3165, -41.7899, 23.6615, -41.2405, 51.006, -0.0705643, 33.8587, 33.3402 )
+vertices = PoolVector2Array( 9.46348, 30.335, -21.2957, 42.0023, -51.5245, 10.3593, -33.3165, -41.7899, 23.7349, -41.2683, 51.006, -0.0705643, 33.8587, 33.3402 )
 polygons = [ PoolIntArray( 0, 1, 2, 3, 4, 5 ), PoolIntArray( 0, 5, 6 ) ]
-outlines = [ PoolVector2Array( 23.6615, -41.2405, 51.006, -0.0705643, 33.8587, 33.3402, 9.46348, 30.335, -21.2957, 42.0023, -51.5245, 10.3593, -33.3165, -41.7899 ) ]
+outlines = [ PoolVector2Array( 23.7349, -41.2683, 51.006, -0.0705643, 33.8587, 33.3402, 9.46348, 30.335, -21.2957, 42.0023, -51.5245, 10.3593, -33.3165, -41.7899 ) ]
 
 [node name="Asteroid" type="RigidBody2D"]
 collision_layer = 2

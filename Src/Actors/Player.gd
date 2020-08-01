@@ -94,6 +94,14 @@ func _physics_process(delta: float) -> void:
 			grapple_length = MIN_GRAPPLE_LENGTH
 	elif Input.is_action_pressed("tap"):
 		mouse_dir = to_local(get_global_mouse_position()).normalized()
+		var mouse_raycast: RayCast2D = get_node("Mouse Raycast")
+		mouse_raycast.set_global_position(get_global_mouse_position())
+		mouse_raycast.set_cast_to(get_parent().get_global_position())
+		
+		var sprite_edges: Navigation2D = get_parent().get_node("SpriteEdges")
+		var path = sprite_edges.get_simple_path(
+			get_parent().to_local(to_global(position)), get_parent().to_local(get_global_mouse_position()))
+		print(path)
 		
 func _on_asteroid_entered(body: Node) -> void:
 	if  asteroid == body:

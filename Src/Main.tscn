@@ -50,10 +50,10 @@ _data = {
 
 [sub_resource type="SegmentShape2D" id=4]
 a = Vector2( 88, -248 )
-b = Vector2( 96, 680 )
+b = Vector2( 88, 816 )
 
 [sub_resource type="RectangleShape2D" id=5]
-extents = Vector2( 544, 144 )
+extents = Vector2( 544, 88.0581 )
 
 [node name="Node2D" type="Node2D"]
 position = Vector2( 161.635, 419.801 )
@@ -120,11 +120,11 @@ collision_layer = 4
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls"]
-position = Vector2( -265.635, -243.801 )
+position = Vector2( -257.635, -243.801 )
 shape = SubResource( 4 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Walls"]
-position = Vector2( 150.365, -243.801 )
+position = Vector2( 158.365, -243.801 )
 shape = SubResource( 4 )
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
@@ -133,9 +133,11 @@ shape = SubResource( 4 )
 wait_time = 0.01
 
 [node name="Diebox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Diebox"]
-position = Vector2( 28.6832, 657.221 )
+position = Vector2( 30.365, 676.199 )
 shape = SubResource( 5 )
 [connection signal="button_down" from="Node2D/TextureButton" to="Node2D/TextureButton" method="_on_TextureButton_button_down"]
 [connection signal="button_up" from="Node2D/TextureButton" to="Node2D/TextureButton" method="_on_TextureButton_button_up"]

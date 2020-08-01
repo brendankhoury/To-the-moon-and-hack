@@ -22,7 +22,9 @@ position = Vector2( 0, 1 )
 polygon = PoolVector2Array( -33.75, -42.25, 23.25, -41.75, 51, -1.25, 37, 27, 30.75, 29, 7, 33.75, -24.75, 39.5, -50.75, 11.5 )
 
 [node name="Death Box" type="Area2D" parent="."]
+collision_layer = 0
 collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Death Box"]
 shape = SubResource( 1 )
+[connection signal="area_entered" from="Death Box" to="." method="_on_Death_Box_area_entered"]

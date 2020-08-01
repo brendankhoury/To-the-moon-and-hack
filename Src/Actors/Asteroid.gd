@@ -26,3 +26,9 @@ func _on_VisibilityNotifier2D_screen_exited():
 	
 func i_do_nothing():
 	pass
+
+
+func _on_Death_Box_area_entered(area: Area2D) -> void:
+	queue_free()
+	print("Asteroid died")
+	pass # Replace with function body.

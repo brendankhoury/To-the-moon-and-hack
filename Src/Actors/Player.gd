@@ -63,31 +63,22 @@ func _physics_process(delta: float) -> void:
 			#consider dissabling the raycast for performance purposes
 			is_grappling = false
 	elif grapple_collided:
-		
-		
 		var global_position_point = asteroid.to_global(collision_point)
 		print(global_position_point)
 		grapple_length = raycast.global_position.distance_to(global_position_point)
 		grapple_dir = raycast.global_position.direction_to(global_position_point)
-		
-#		var grapple_angle:float = raycast.position.angle_to_point(to_local(collision_point))
 		position += grapple_speed * grapple_dir * delta
-#		move_and_slide(grapple_dir)
 		grapple_length -= grapple_speed * delta
 	elif grapple_length > 0.0:
 		grapple_length -= grapple_speed * delta
 		if grapple_length < 0:
 			grapple_length = 0
-	elif stuck:
-		var point_on_asteroid = asteroid.to_global(collision_point)
-		var player_dir = global_position.direction_to(point_on_asteroid)
-		var player_radius = get_node("player").get_rect().size.x/2
-		set_global_position(point_on_asteroid + player_dir * player_radius)
 
 func _on_asteroid_entered(body: Node) -> void:
-#	if grapple_colided:
+	if  asteroid == body:
 		grapple_collided = false
-		stuck = true
-		asteroid = body
-		print ("Asteroid collission detected. ")
-#	pass # Replace with function body.
+		var previous_global_position := global_position
+		if self.get_parent():
+			self.get_parent().remove_child(self)
+		body.add_child(self)
+		set_global_position(previous_global_position)

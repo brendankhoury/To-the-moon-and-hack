@@ -25,6 +25,6 @@ func _physics_process(delta: float) -> void:
 func _on_Death_Box_area_entered(area: Area2D) -> void:
 	if get_node("Player"):
 		get_parent().get_node("Timer").stop()
-		# game over
+		get_parent().game_over = true
 	queue_free()
 	pass # Replace with function body.

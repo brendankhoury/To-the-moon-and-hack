@@ -75,10 +75,10 @@ func _physics_process(delta: float) -> void:
 		#raycast and snap and rotate mouse_dir
 		var mouse_raycast: RayCast2D = get_node("Mouse Raycast")
 		mouse_raycast.set_global_position(get_parent().get_global_position())
-		mouse_raycast.set_cast_to(mouse_raycast.to_local(get_global_mouse_position()))
+		mouse_raycast.set_cast_to(mouse_raycast.to_local(to_global(mouse_dir)))
 #		print(mouse_raycast.get_collision_point())
 		var mouse_collision = mouse_raycast.get_collision_point()
-		set_global_position(mouse_collision + mouse_collision.direction_to(get_global_mouse_position())*PLAYER_WIDTH )
+		set_global_position(mouse_collision + mouse_collision.direction_to(to_global(10*mouse_dir))*PLAYER_WIDTH )
 #		print()
 #		var sprite_edges: Navigation2D = get_parent().get_node("SpriteEdges")
 #		var path = sprite_edges.get_simple_path(
@@ -88,7 +88,6 @@ func _physics_process(delta: float) -> void:
 		
 	
 	if Input.is_action_just_released("tap"):
-		mouse_dir = to_local(get_global_mouse_position()).normalized()
 		if is_grappling:
 			is_grappling = false
 		elif !is_grappling && grapple_length == MIN_GRAPPLE_LENGTH:

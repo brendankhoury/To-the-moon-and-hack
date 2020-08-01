@@ -20,12 +20,14 @@ var grapple_rotate_clockwise:bool = true
 var asteroid : Node2D
 
 var velocity := Vector2.ZERO
+
+var mouse_dir : Vector2
 # https://godotengine.org/qa/30772/how-to-create-a-grappling-hook-2d
 # https://docs.godotengine.org/en/stable/tutorials/physics/ray-casting.html
-func grapple(length: float, angle: float):
+func grapple(length: float):
 	var raycast = get_node("GrappleDetection")
 	
-	raycast.set_cast_to(Vector2(0, length))
+	raycast.set_cast_to(length*mouse_dir)
 	grapple_collided = raycast.is_colliding()
 	if grapple_collided:
 		asteroid = raycast.get_collider()
@@ -44,7 +46,7 @@ func _draw() -> void:
 	else:
 		draw_line(
 			Vector2(0, 0), 
-			Vector2(0, grapple_length), 
+			grapple_length*mouse_dir, 
 			Color(255, 255, 255), 
 			3
 		)
@@ -54,8 +56,12 @@ func _process(_delta: float) -> void:
 
 func _physics_process(delta: float) -> void:
 	var raycast = get_node("GrappleDetection")	
-
-	if Input.is_action_just_pressed("tap"):
+	
+	if Input.is_action_pressed("tap"):
+		mouse_dir = to_local(get_global_mouse_position()).normalized()
+	
+	if Input.is_action_just_released("tap"):
+		mouse_dir = to_local(get_global_mouse_position()).normalized()
 		if is_grappling:
 			is_grappling = false
 		elif !is_grappling && grapple_length == MIN_GRAPPLE_LENGTH:
@@ -64,7 +70,7 @@ func _physics_process(delta: float) -> void:
 	if is_grappling:
 		if grapple_length < max_grapple:
 			grapple_length += delta * grapple_speed
-			grapple(grapple_length,global_rotation)
+			grapple(grapple_length)
 			if (grapple_collided):
 				is_grappling = false
 		else:

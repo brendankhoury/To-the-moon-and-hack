@@ -15,7 +15,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Space Themed Game"
+config/name="AstroHop"
 run/main_scene="res://Src/Main.tscn"
 config/icon="res://icon.png"
 

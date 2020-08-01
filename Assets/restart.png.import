@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Start Button.png-78c81b203a7e6b26890182e6d7991401.stex"
+path="res://.import/restart.png-47eb4f35b1266bcb02b6dd946fabaa1c.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Start Button.png"
-dest_files=[ "res://.import/Start Button.png-78c81b203a7e6b26890182e6d7991401.stex" ]
+source_file="res://Assets/restart.png"
+dest_files=[ "res://.import/restart.png-47eb4f35b1266bcb02b6dd946fabaa1c.stex" ]
 
 [params]
 

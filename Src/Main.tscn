@@ -64,12 +64,13 @@ tile_data = PoolIntArray( -65537, 0, 0, -131072, 0, 0, -1, 0, 0, -65536, 0, 0, 6
 position = Vector2( -82.8822, -303.322 )
 
 [node name="StartAstroid" parent="." instance=ExtResource( 1 )]
-position = Vector2( 24.0416, 319.612 )
+position = Vector2( 24.5713, 319.612 )
 move_speed = 0
 
 [node name="Player" parent="StartAstroid" instance=ExtResource( 2 )]
 position = Vector2( -3.41815, -70.3212 )
 rotation = 2.60229
+grapple_speed = 1200.0
 
 [node name="AsteroidPath" type="Path2D" parent="."]
 curve = SubResource( 2 )

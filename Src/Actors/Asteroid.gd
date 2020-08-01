@@ -2,7 +2,7 @@ extends RigidBody2D
 
 export var rotation_speed := 25
 export var move_speed := 1;
-export var max_angle := deg2rad(15)
+export var max_angle := deg2rad(30)
 
 var angle := deg2rad(90)
 var vector := Vector2.DOWN

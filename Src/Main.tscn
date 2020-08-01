@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Src/Actors/Asteroid.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Src/Actors/Player.tscn" type="PackedScene" id=2]
@@ -24,7 +24,7 @@
 
 [sub_resource type="Curve2D" id=2]
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, -161.635, -419.801, 0, 0, 0, 0, 238.365, -419.801 )
+"points": PoolVector2Array( 0, 0, 0, 0, -144, -456, 0, 0, 0, 0, 200, -456 )
 }
 
 [sub_resource type="GDScript" id=3]
@@ -47,6 +47,10 @@ func _on_TextureButton_button_up():
 		up = true
 	pass # Replace with function body.
 "
+
+[sub_resource type="SegmentShape2D" id=4]
+a = Vector2( 88, -248 )
+b = Vector2( 96, 680 )
 
 [node name="Node2D" type="Node2D"]
 position = Vector2( 161.635, 419.801 )
@@ -72,10 +76,11 @@ position = Vector2( -3.41815, -70.3212 )
 rotation = 2.60229
 
 [node name="AsteroidPath" type="Path2D" parent="."]
+position = Vector2( 6.36501, -19.801 )
 curve = SubResource( 2 )
 
 [node name="AsteroidSpawnLocation" type="PathFollow2D" parent="AsteroidPath"]
-position = Vector2( -161.635, -419.801 )
+position = Vector2( -160, -456 )
 rotation = -7.75955e-06
 
 [node name="AsteroidSpawnTimer" type="Timer" parent="."]
@@ -84,15 +89,27 @@ autostart = true
 
 [node name="TextureButton" type="TextureButton" parent="."]
 pause_mode = 2
-margin_left = 151.389
-margin_top = -400.345
-margin_right = 215.389
-margin_bottom = -336.345
+margin_left = 158.365
+margin_top = -403.801
+margin_right = 222.365
+margin_bottom = -339.801
 texture_normal = ExtResource( 4 )
 script = SubResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2( -265.635, -243.801 )
+shape = SubResource( 4 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2( 150.365, -243.801 )
+shape = SubResource( 4 )
 [connection signal="timeout" from="AsteroidSpawnTimer" to="." method="_on_AsteroidSpawnTimer_timeout"]
 [connection signal="button_down" from="TextureButton" to="TextureButton" method="_on_TextureButton_button_down"]
 [connection signal="button_up" from="TextureButton" to="TextureButton" method="_on_TextureButton_button_up"]

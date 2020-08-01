@@ -3,7 +3,7 @@
 [ext_resource path="res://Src/Actors/Asteroid.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Src/Actors/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Src/Main.gd" type="Script" id=3]
-[ext_resource path="res://icon.png" type="Texture" id=4]
+[ext_resource path="res://Assets/pause.png" type="Texture" id=4]
 [ext_resource path="res://Assets/blue.png" type="Texture" id=5]
 [ext_resource path="res://Src/TextureButton.gd" type="Script" id=6]
 
@@ -77,11 +77,11 @@ cell_size = Vector2( 256, 256 )
 format = 1
 tile_data = PoolIntArray( -65537, 0, 0, -131072, 0, 0, -1, 0, 0, -65536, 0, 0, 65535, 0, 0, 0, 0, 0, 131071, 0, 0, 65536, 0, 0 )
 
-[node name="Node2D" type="Node2D" parent="."]
+[node name="UI" type="Node2D" parent="."]
 pause_mode = 2
 z_index = 1
 
-[node name="PauseButton" type="TextureButton" parent="Node2D"]
+[node name="PauseButton" type="TextureButton" parent="UI"]
 pause_mode = 2
 margin_left = 158.365
 margin_top = -403.801
@@ -93,7 +93,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="Node2D"]
+[node name="Label" type="Label" parent="UI"]
 margin_left = -137.635
 margin_top = -395.801
 margin_right = -86.635
@@ -103,7 +103,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="StartButton" type="TextureButton" parent="Node2D"]
+[node name="StartButton" type="TextureButton" parent="UI"]
 pause_mode = 2
 margin_left = -57.635
 margin_top = -27.801
@@ -114,7 +114,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="Node2D/StartButton"]
+[node name="Label" type="Label" parent="UI/StartButton"]
 margin_left = 64.0
 margin_top = 16.0
 margin_right = 149.0
@@ -171,8 +171,8 @@ collision_mask = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Diebox"]
 position = Vector2( 30.365, 676.199 )
 shape = SubResource( 5 )
-[connection signal="button_down" from="Node2D/PauseButton" to="Node2D/PauseButton" method="_on_TextureButton_button_down"]
-[connection signal="button_up" from="Node2D/PauseButton" to="Node2D/PauseButton" method="_on_TextureButton_button_up"]
-[connection signal="button_up" from="Node2D/StartButton" to="Node2D/StartButton" method="_on_StartButton_button_up"]
+[connection signal="button_down" from="UI/PauseButton" to="UI/PauseButton" method="_on_TextureButton_button_down"]
+[connection signal="button_up" from="UI/PauseButton" to="UI/PauseButton" method="_on_TextureButton_button_up"]
+[connection signal="button_up" from="UI/StartButton" to="UI/StartButton" method="_on_StartButton_button_up"]
 [connection signal="timeout" from="AsteroidSpawnTimer" to="." method="_on_AsteroidSpawnTimer_timeout"]
 [connection signal="timeout" from="Timer" to="StartAstroid/Player" method="_on_Timer_timeout"]

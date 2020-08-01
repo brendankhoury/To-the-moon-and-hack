@@ -1,18 +1,21 @@
 extends KinematicBody2D
 
+var MIN_GRAPPLE_LENGTH: float = 30.0
 
 export var rotation_speed := deg2rad(0)
 export var grapple_speed: float = 350
 export var max_grapple = 500
 
 var is_grappling: bool = false
-var grapple_length: float = 30.0
+var grapple_length: float = MIN_GRAPPLE_LENGTH
 var grapple_dir: Vector2 = Vector2.DOWN
 var grapple_collided: bool = false
 
 var collision_point: Vector2 = Vector2(0, 0)
 var global_collision_point: Vector2
 var stuck: bool= true
+
+var grapple_rotate_clockwise:bool = true
 
 var asteroid : Node2D
 
@@ -55,8 +58,9 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("tap"):
 		if is_grappling:
 			is_grappling = false
-		elif !is_grappling && grapple_length == 0:
+		elif !is_grappling && grapple_length == MIN_GRAPPLE_LENGTH:
 			is_grappling = true
+		
 	if is_grappling:
 		if grapple_length < max_grapple:
 			grapple_length += delta * grapple_speed
@@ -73,15 +77,15 @@ func _physics_process(delta: float) -> void:
 		grapple_dir = raycast.global_position.direction_to(global_collision_point)
 		position += grapple_speed * grapple_dir * delta
 		grapple_length -= grapple_speed * delta
-	elif grapple_length > 0.0:
+	elif grapple_length > MIN_GRAPPLE_LENGTH:
 		grapple_length -= grapple_speed * delta
-		if grapple_length < 0:
-			grapple_length = 0
+		if grapple_length < MIN_GRAPPLE_LENGTH:
+			grapple_length = MIN_GRAPPLE_LENGTH
 
 func _on_asteroid_entered(body: Node) -> void:
 	if  asteroid == body:
 		grapple_collided = false
-		grapple_length=0
+		grapple_length = MIN_GRAPPLE_LENGTH
 		var previous_global_position := global_position
 		if self.get_parent():
 			self.get_parent().remove_child(self)

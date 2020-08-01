@@ -38,6 +38,8 @@ func grapple(length: float):
 		asteroid = raycast.get_collider()
 		collision_point = asteroid.to_local(raycast.get_collision_point())
 		global_collision_point = asteroid.to_global(collision_point)
+		var previous_global_position := global_position
+		call_deferred("reparent",self, previous_global_position)
 		
 func _draw() -> void:
 	
@@ -122,8 +124,6 @@ func _on_asteroid_entered(body: Node) -> void:
 	if  asteroid == body and grapple_collided:
 		grapple_collided = false
 		grapple_length = MIN_GRAPPLE_LENGTH
-		var previous_global_position := global_position
-		call_deferred("reparent",self, previous_global_position)
 
 func reparent(node, previous_global_position):
 	print("reparent")

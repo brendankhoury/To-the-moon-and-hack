@@ -28,7 +28,10 @@ func grapple(length: float):
 	var raycast = get_node("GrappleDetection")
 	
 	raycast.set_cast_to(length*mouse_dir)
-	grapple_collided = raycast.is_colliding()
+	if raycast.is_colliding() and raycast.get_collider() == get_parent():
+		is_grappling = false
+	else:
+		grapple_collided = raycast.is_colliding()
 	if grapple_collided:
 		asteroid = raycast.get_collider()
 		collision_point = asteroid.to_local(raycast.get_collision_point())
@@ -57,8 +60,10 @@ func _process(_delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	var raycast = get_node("GrappleDetection")	
 	
-	if grapple_length == MIN_GRAPPLE_LENGTH and Input.is_action_pressed("tap"):
-		mouse_dir = to_local(get_global_mouse_position()).normalized()
+	if !grapple_collided:
+		#raycast and snap and rotate mouse_dir
+		pass
+		
 	
 	if Input.is_action_just_released("tap"):
 		mouse_dir = to_local(get_global_mouse_position()).normalized()
@@ -87,7 +92,9 @@ func _physics_process(delta: float) -> void:
 		grapple_length -= grapple_speed * delta
 		if grapple_length < MIN_GRAPPLE_LENGTH:
 			grapple_length = MIN_GRAPPLE_LENGTH
-
+	elif Input.is_action_pressed("tap"):
+		mouse_dir = to_local(get_global_mouse_position()).normalized()
+		
 func _on_asteroid_entered(body: Node) -> void:
 	if  asteroid == body:
 		grapple_collided = false
@@ -97,3 +104,4 @@ func _on_asteroid_entered(body: Node) -> void:
 			self.get_parent().remove_child(self)
 		body.add_child(self)
 		set_global_position(previous_global_position)
+		rotate(-get_parent().rotation_speed)

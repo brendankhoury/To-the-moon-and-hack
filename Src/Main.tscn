@@ -175,4 +175,4 @@ shape = SubResource( 5 )
 [connection signal="button_up" from="UI/PauseButton" to="UI/PauseButton" method="_on_TextureButton_button_up"]
 [connection signal="button_up" from="UI/StartButton" to="UI/StartButton" method="_on_StartButton_button_up"]
 [connection signal="timeout" from="AsteroidSpawnTimer" to="." method="_on_AsteroidSpawnTimer_timeout"]
-[connection signal="timeout" from="Timer" to="StartAstroid/Player" method="_on_Timer_timeout"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

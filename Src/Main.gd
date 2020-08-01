@@ -1,7 +1,7 @@
 extends Node
 
 export (PackedScene) var Asteroid
-var score
+var score : int = 0
 
 func _ready():
 	randomize()
@@ -24,3 +24,8 @@ func _on_AsteroidSpawnTimer_timeout():
 	# Add some randomness to the direction.
 	direction += rand_range(-PI / 4, PI / 4)
 	asteroid.rotation = direction
+
+func _on_Timer_timeout():
+	score = score + 1
+	get_node("UI").get_node("Label").text = "Score: " + str(score)
+

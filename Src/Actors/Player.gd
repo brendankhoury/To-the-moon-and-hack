@@ -63,11 +63,11 @@ func _process(_delta: float) -> void:
 func _ready() -> void:
 	PLAYER_WIDTH = get_node("player").texture.get_size().x/4.0
 func _physics_process(delta: float) -> void:
-	if !get_parent().get_parent().get_node("Node2D/StartButton").started:
-		get_parent().get_parent().get_node("Node2D/StartButton").started = true
+	if !get_parent().get_parent().get_node("UI/StartButton").started:
+		get_parent().get_parent().get_node("UI/StartButton").started = true
 		return
-	if get_parent().get_parent().get_node("Node2D/PauseButton").paused:
-		get_parent().get_parent().get_node("Node2D/PauseButton").paused = false
+	if get_parent().get_parent().get_node("UI/PauseButton").paused:
+		get_parent().get_parent().get_node("UI/PauseButton").paused = false
 		return
 	var raycast = get_node("GrappleDetection")	
 	
@@ -130,12 +130,4 @@ func reparent(node, previous_global_position):
 	node.get_parent().remove_child(node) # error here  
 	asteroid.add_child(node) 
 	set_global_position(previous_global_position)
-	
-var score : int = 0
-func _on_Timer_timeout():
-	score = score + 1
-	get_parent().get_parent().get_node("Node2D").get_node("Label").text = "Score: " + str(score)
-
-func _on_VisibilityNotifier2D_screen_exited():
-	queue_free()
 	

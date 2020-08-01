@@ -32,5 +32,7 @@ collision_mask = 2
 shape = SubResource( 2 )
 
 [node name="Mouse Raycast" type="RayCast2D" parent="."]
-collision_mask = 2147483650
+enabled = true
+collision_mask = 2
+collide_with_areas = true
 [connection signal="body_entered" from="Area2D" to="." method="_on_asteroid_entered"]

@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+var PLAYER_WIDTH: float
+
 var MIN_GRAPPLE_LENGTH: float = 30.0
 
 export var rotation_speed := deg2rad(0)
@@ -56,7 +58,8 @@ func _draw() -> void:
 
 func _process(_delta: float) -> void:
 	update()
-
+func _ready() -> void:
+	PLAYER_WIDTH = get_node("player").texture.get_size().x/4.0
 func _physics_process(delta: float) -> void:
 	var raycast = get_node("GrappleDetection")	
 	
@@ -96,13 +99,16 @@ func _physics_process(delta: float) -> void:
 		mouse_dir = to_local(get_global_mouse_position()).normalized()
 		var mouse_raycast: RayCast2D = get_node("Mouse Raycast")
 		mouse_raycast.set_global_position(get_global_mouse_position())
-		mouse_raycast.set_cast_to(get_parent().get_global_position())
-		
-		var sprite_edges: Navigation2D = get_parent().get_node("SpriteEdges")
-		var path = sprite_edges.get_simple_path(
-			get_parent().to_local(to_global(position)), get_parent().to_local(get_global_mouse_position()))
-		print(path)
-		
+		mouse_raycast.set_cast_to(mouse_raycast.to_local(get_parent().get_global_position()))
+#		print(mouse_raycast.get_collision_point())
+		var mouse_collision = mouse_raycast.get_collision_point()
+		set_global_position(mouse_collision + mouse_collision.direction_to(get_global_mouse_position())*PLAYER_WIDTH )
+#		print()
+#		var sprite_edges: Navigation2D = get_parent().get_node("SpriteEdges")
+#		var path = sprite_edges.get_simple_path(
+#			get_parent().to_local(to_global(position)), get_parent().to_local(get_global_mouse_position()))
+#		print(path)
+
 func _on_asteroid_entered(body: Node) -> void:
 	if  asteroid == body:
 		grapple_collided = false

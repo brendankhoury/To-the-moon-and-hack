@@ -57,7 +57,7 @@ func _process(_delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	var raycast = get_node("GrappleDetection")	
 	
-	if Input.is_action_pressed("tap"):
+	if grapple_length == MIN_GRAPPLE_LENGTH and Input.is_action_pressed("tap"):
 		mouse_dir = to_local(get_global_mouse_position()).normalized()
 	
 	if Input.is_action_just_released("tap"):

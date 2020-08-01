@@ -18,17 +18,3 @@ func _ready():
 #	pass
 
 
-func _on_TextureButton_button_down():
-	get_tree().paused = true
-	down = true
-	pass # Replace with function body.
-
-
-func _on_TextureButton_button_up():
-	if up:
-		up = false
-		get_tree().paused = false
-	if down:
-		down = false
-		up = true
-	pass # Replace with function body.

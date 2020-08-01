@@ -5,23 +5,25 @@
 [ext_resource path="res://Src/PauseScene.gd" type="Script" id=3]
 [ext_resource path="res://icon.png" type="Texture" id=4]
 
-[sub_resource type="GDScript" id=1]
+[sub_resource type="GDScript" id=2]
 script/source = "extends TextureButton
 
+var down = false
+var up = false
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = \"text\"
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
+func _on_TextureButton_button_down():
+	get_tree().paused = true
+	down = true
 	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _on_TextureButton_button_up():
+	if up:
+		up = false
+		down = false
+		get_tree().paused = false
+	if down:
+		down = false
+		up = true
+	pass # Replace with function body.
 "
 
 [node name="Test" type="Node2D"]
@@ -45,7 +47,7 @@ margin_top = 6.36398
 margin_right = 393.554
 margin_bottom = 46.364
 texture_normal = ExtResource( 4 )
-script = SubResource( 1 )
+script = SubResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

@@ -11,6 +11,7 @@ var grapple_dir: Vector2 = Vector2.DOWN
 var grapple_collided: bool = false
 
 var collision_point: Vector2 = Vector2(0, 0)
+var global_collision_point: Vector2
 var stuck: bool= true
 
 var asteroid : Node2D
@@ -24,23 +25,26 @@ func grapple(length: float, angle: float):
 	raycast.set_cast_to(Vector2(0, length))
 	grapple_collided = raycast.is_colliding()
 	if grapple_collided:
-#		if abs(global_position.distance_to(raycast.get_collision_point())) < 150:
 		asteroid = raycast.get_collider()
-		print("C")
-		
 		collision_point = asteroid.to_local(raycast.get_collision_point())
-#		else: 
-#			grapple_length = 30
-#			grapple_collided = false
-#			is_grappling = false
-
+		global_collision_point = asteroid.to_global(collision_point)
+		
 func _draw() -> void:
-	draw_line(
-		Vector2(0, 0), 
-		Vector2(0, grapple_length), 
-		Color(255, 255, 255), 
-		3
-	)
+	
+	if grapple_collided:
+		draw_line(
+			Vector2(0, 0), 
+			to_local(global_collision_point), 
+			Color(255, 255, 255), 
+			3
+		)
+	else:
+		draw_line(
+			Vector2(0, 0), 
+			Vector2(0, grapple_length), 
+			Color(255, 255, 255), 
+			3
+		)
 
 func _process(_delta: float) -> void:
 	update()
@@ -63,10 +67,10 @@ func _physics_process(delta: float) -> void:
 			#consider dissabling the raycast for performance purposes
 			is_grappling = false
 	elif grapple_collided:
-		var global_position_point = asteroid.to_global(collision_point)
-		print(global_position_point)
-		grapple_length = raycast.global_position.distance_to(global_position_point)
-		grapple_dir = raycast.global_position.direction_to(global_position_point)
+		global_collision_point = asteroid.to_global(collision_point)
+
+		grapple_length = raycast.global_position.distance_to(global_collision_point)
+		grapple_dir = raycast.global_position.direction_to(global_collision_point)
 		position += grapple_speed * grapple_dir * delta
 		grapple_length -= grapple_speed * delta
 	elif grapple_length > 0.0:
@@ -77,6 +81,7 @@ func _physics_process(delta: float) -> void:
 func _on_asteroid_entered(body: Node) -> void:
 	if  asteroid == body:
 		grapple_collided = false
+		grapple_length=0
 		var previous_global_position := global_position
 		if self.get_parent():
 			self.get_parent().remove_child(self)

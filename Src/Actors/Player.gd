@@ -63,8 +63,19 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	var raycast = get_node("GrappleDetection")	
 	
-	if !grapple_collided:
+	if !grapple_collided and (Input.is_action_pressed("tap") or is_grappling or grapple_length != MIN_GRAPPLE_LENGTH):
 		#raycast and snap and rotate mouse_dir
+		var mouse_raycast: RayCast2D = get_node("Mouse Raycast")
+		mouse_raycast.set_global_position(get_parent().get_global_position())
+		mouse_raycast.set_cast_to(mouse_raycast.to_local(to_global(mouse_dir)))
+#		print(mouse_raycast.get_collision_point())
+		var mouse_collision = mouse_raycast.get_collision_point()
+		set_global_position(mouse_collision + mouse_collision.direction_to(get_global_mouse_position())*PLAYER_WIDTH )
+#		print()
+#		var sprite_edges: Navigation2D = get_parent().get_node("SpriteEdges")
+#		var path = sprite_edges.get_simple_path(
+#			get_parent().to_local(to_global(position)), get_parent().to_local(get_global_mouse_position()))
+#		print(path)
 		pass
 		
 	
@@ -89,33 +100,25 @@ func _physics_process(delta: float) -> void:
 
 		grapple_length = raycast.global_position.distance_to(global_collision_point)
 		grapple_dir = raycast.global_position.direction_to(global_collision_point)
-		position += grapple_speed * grapple_dir * delta
+		global_position += grapple_speed * grapple_dir * delta
 		grapple_length -= grapple_speed * delta
 	elif grapple_length > MIN_GRAPPLE_LENGTH:
 		grapple_length -= grapple_speed * delta
 		if grapple_length < MIN_GRAPPLE_LENGTH:
 			grapple_length = MIN_GRAPPLE_LENGTH
-	elif Input.is_action_pressed("tap"):
+	elif Input.is_action_pressed("tap") and grapple_length == MIN_GRAPPLE_LENGTH:
 		mouse_dir = to_local(get_global_mouse_position()).normalized()
-		var mouse_raycast: RayCast2D = get_node("Mouse Raycast")
-		mouse_raycast.set_global_position(get_parent().get_global_position())
-		mouse_raycast.set_cast_to(mouse_raycast.to_local(get_global_mouse_position()))
-#		print(mouse_raycast.get_collision_point())
-		var mouse_collision = mouse_raycast.get_collision_point()
-		set_global_position(mouse_collision + mouse_collision.direction_to(get_global_mouse_position())*PLAYER_WIDTH )
-#		print()
-#		var sprite_edges: Navigation2D = get_parent().get_node("SpriteEdges")
-#		var path = sprite_edges.get_simple_path(
-#			get_parent().to_local(to_global(position)), get_parent().to_local(get_global_mouse_position()))
-#		print(path)
+		
 
 func _on_asteroid_entered(body: Node) -> void:
-	if  asteroid == body:
+	if  asteroid == body and grapple_collided:
 		grapple_collided = false
 		grapple_length = MIN_GRAPPLE_LENGTH
 		var previous_global_position := global_position
-		if self.get_parent():
-			self.get_parent().remove_child(self)
-		body.add_child(self)
-		set_global_position(previous_global_position)
-		rotate(-get_parent().rotation_speed)
+		call_deferred("reparent",self, previous_global_position)
+
+func reparent(node, previous_global_position):
+	print("reparent")
+	node.get_parent().remove_child(node) # error here  
+	asteroid.add_child(node) 
+	set_global_position(previous_global_position)

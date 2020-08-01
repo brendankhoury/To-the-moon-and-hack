@@ -98,8 +98,8 @@ func _physics_process(delta: float) -> void:
 	elif Input.is_action_pressed("tap"):
 		mouse_dir = to_local(get_global_mouse_position()).normalized()
 		var mouse_raycast: RayCast2D = get_node("Mouse Raycast")
-		mouse_raycast.set_global_position(get_global_mouse_position())
-		mouse_raycast.set_cast_to(mouse_raycast.to_local(get_parent().get_global_position()))
+		mouse_raycast.set_global_position(get_parent().get_global_position())
+		mouse_raycast.set_cast_to(mouse_raycast.to_local(get_global_mouse_position()))
 #		print(mouse_raycast.get_collision_point())
 		var mouse_collision = mouse_raycast.get_collision_point()
 		set_global_position(mouse_collision + mouse_collision.direction_to(get_global_mouse_position())*PLAYER_WIDTH )

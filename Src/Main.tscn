@@ -31,6 +31,10 @@ var up = false
 
 var paused = false
 
+var pause_texture: Texture = preload(\"res://Assets/pause.png\")
+var play_texture: Texture = preload(\"res://Assets/play.png\")
+
+
 func _on_TextureButton_button_down():
 	if get_parent().get_node(\"StartButton\").started:
 		paused = true
@@ -38,7 +42,12 @@ func _on_TextureButton_button_down():
 		get_parent().get_node(\"StartButton\").disabled = false
 		get_parent().get_node(\"StartButton\").visible = true
 		down = true
-	pass # Replace with function body.
+	if paused:
+		texture_normal = play_texture
+	else: 
+		texture_normal = pause_texture
+
+
 func _on_TextureButton_button_up():
 	if get_parent().get_node(\"StartButton\").started:
 		if up:
@@ -50,7 +59,11 @@ func _on_TextureButton_button_up():
 		if down:
 			down = false
 			up = true
-	pass # Replace with function body.
+			
+	if paused:
+		texture_normal = play_texture
+	else: 
+		texture_normal = pause_texture
 "
 
 [sub_resource type="Curve2D" id=3]

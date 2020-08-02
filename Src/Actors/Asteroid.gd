@@ -14,8 +14,8 @@ var movement_coef: float
 func _ready():
 	angle += rand_range(-max_angle, max_angle)
 	vector = move_speed*Vector2(cos(angle), sin(angle))
-	movement_coef = rand_range(0.7,1.3)
-	rotation_coef = (rand_range(-1.5,1.5))
+	movement_coef = rand_range(0.8,1.2)
+	rotation_coef = (rand_range(-1.25,1.25))
 	
 
 func _physics_process(delta: float) -> void:
